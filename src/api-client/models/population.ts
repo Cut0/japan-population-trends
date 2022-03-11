@@ -1,13 +1,15 @@
 import { initializeAxios } from "../plugins/axios";
-import { Prefecture, TotalPopulation } from "./types";
+import { Prefecture, TotalPopulation, TotalPopulationData } from "./types";
 import { PopulationResponse } from ".";
 
 const GET_POPULATION_TRENDS_URL = "/population/composition/perYear";
 
-export const getPopulationTrends = (prefectureList: Prefecture[]) => {
+export const getPopulationTrends = () => {
   return {
     key: GET_POPULATION_TRENDS_URL,
-    handler: async (): Promise<TotalPopulation[]> => {
+    handler: async (
+      prefectureList: Prefecture[],
+    ): Promise<TotalPopulationData[]> => {
       const requests = prefectureList
         .map((prefecture) => prefecture.prefCode)
         .map((code) => {
@@ -23,12 +25,9 @@ export const getPopulationTrends = (prefectureList: Prefecture[]) => {
                   (el) => el.label === "総人口",
                 ) as TotalPopulation;
 
-                return {
-                  ...totalPopulation,
-                  data: totalPopulation.data.filter(
-                    (el) => el.year <= response.data.result.boundaryYear,
-                  ),
-                };
+                return totalPopulation.data.filter(
+                  (el) => el.year <= response.data.result.boundaryYear,
+                );
               });
             return totalPopulation;
           };
