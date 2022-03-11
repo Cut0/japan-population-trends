@@ -21,6 +21,9 @@ export const getPopulationTrends = () => {
                 },
               })
               .then((response) => {
+                if (process.env.NODE_ENV === "development") {
+                  return response.data as unknown as TotalPopulationData;
+                }
                 const totalPopulation = response.data.result.data.find(
                   (el) => el.label === "総人口",
                 ) as TotalPopulation;

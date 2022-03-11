@@ -11,5 +11,8 @@ const mockGetPopulationTrends: ResponseResolver<
 };
 
 export const populationTrendsHandlers = [
-  rest.get(getPopulationTrends().key, mockGetPopulationTrends),
+  rest.get(
+    `${process.env.NEXT_PUBLIC_END_POINT}${getPopulationTrends().key}`,
+    mockGetPopulationTrends,
+  ),
 ];

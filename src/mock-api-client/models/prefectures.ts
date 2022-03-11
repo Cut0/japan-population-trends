@@ -10,5 +10,8 @@ const mockGetAllPrefectures: ResponseResolver<
 };
 
 export const allPrefecturesHandlers = [
-  rest.get(getAllPrefectures().key, mockGetAllPrefectures),
+  rest.get(
+    `${process.env.NEXT_PUBLIC_END_POINT}${getAllPrefectures().key}`,
+    mockGetAllPrefectures,
+  ),
 ];
