@@ -1,8 +1,13 @@
-import "../styles/globals.css";
 import type { AppProps } from "next/app";
 
-function MyApp({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />;
+import { initializeMock } from "../mock-api-client";
+
+if (process.env.NODE_ENV === "development") {
+  initializeMock();
 }
 
-export default MyApp;
+const App = ({ Component, pageProps }: AppProps) => {
+  return <Component {...pageProps} />;
+};
+
+export default App;
