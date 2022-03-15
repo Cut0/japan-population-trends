@@ -1,5 +1,5 @@
-import { TotalPopulationData } from "../../api-client";
-export const totalPopulationData: TotalPopulationData[] = [
+import { TotalPopulationDataElement } from "../../api-client";
+export const totalPopulationData: TotalPopulationDataElement[][] = [
   [
     {
       year: 1960,

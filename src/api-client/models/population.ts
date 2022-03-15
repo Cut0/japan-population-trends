@@ -1,6 +1,6 @@
 import { initializeAxios } from "../plugins/axios";
-import { Prefecture, TotalPopulation, TotalPopulationData } from "./types";
-import { PopulationResponse } from ".";
+import { Prefecture, TotalPopulation, TotalPopulationResponse } from "./types";
+import { PopulationResponse, TotalPopulationDataElement } from ".";
 
 const GET_POPULATION_TRENDS_URL = "/population/composition/perYear";
 
@@ -9,7 +9,7 @@ export const getPopulationTrends = () => {
     key: GET_POPULATION_TRENDS_URL,
     handler: async (
       prefectureList: Prefecture[],
-    ): Promise<TotalPopulationData[]> => {
+    ): Promise<TotalPopulation[]> => {
       const requests = prefectureList
         .map((prefecture) => prefecture.prefCode)
         .map((code) => {
@@ -22,11 +22,14 @@ export const getPopulationTrends = () => {
               })
               .then((response) => {
                 if (process.env.NODE_ENV === "development") {
-                  return response.data as unknown as TotalPopulationData;
+                  /**
+                   * MSWに渡すためresponse.dataに設定
+                   */
+                  return response.data as unknown as TotalPopulationDataElement[];
                 }
                 const totalPopulation = response.data.result.data.find(
                   (el) => el.label === "総人口",
-                ) as TotalPopulation;
+                ) as TotalPopulationResponse;
 
                 return totalPopulation.data.filter(
                   (el) => el.year <= response.data.result.boundaryYear,
@@ -39,7 +42,9 @@ export const getPopulationTrends = () => {
       const totalPopulationList = await Promise.all(
         requests.map((request) => request()),
       );
-      return totalPopulationList;
+      return totalPopulationList.map((el, index) => {
+        return { data: el, prefecture: prefectureList[index] };
+      });
     },
   };
 };

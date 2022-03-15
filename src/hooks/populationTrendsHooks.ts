@@ -3,12 +3,12 @@ import useSWR from "swr";
 import {
   getPopulationTrends,
   Prefecture,
-  TotalPopulationData,
+  TotalPopulation,
 } from "../api-client";
 
 export const usePopulationTrends = () => {
   const { key, handler } = getPopulationTrends();
-  const { data, error, mutate } = useSWR<TotalPopulationData[], Error>(key);
+  const { data, error, mutate } = useSWR<TotalPopulation[], Error>(key);
 
   const fetchPopulationTrends = useCallback(
     (prefectureList: Prefecture[]) => {
