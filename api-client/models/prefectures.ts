@@ -1,4 +1,5 @@
 import { initializeAxios } from "../plugins/axios";
+import { mockAllPrefecture } from "../../mock-api-client";
 import { Prefecture, PrefecturesResponse } from ".";
 
 const GET_All_PREFECTURES_URL = "/prefectures";
@@ -10,10 +11,9 @@ export class getAllPrefectures {
       .get<PrefecturesResponse>(GET_All_PREFECTURES_URL)
       .then((response) => {
         if (process.env.NODE_ENV === "development") {
-          /**
-           * MSWに渡すためresponse.dataに設定
-           */
-          return response.data as unknown as Prefecture[];
+          // mswが要求するnodeのバージョンがvercelに存在しないため、一時的にmswを利用しない方針にする。
+          // return response.data as unknown as Prefecture[];
+          return mockAllPrefecture;
         }
         return response.data.result;
       });
