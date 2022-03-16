@@ -10,7 +10,7 @@ type HomeProps = {
 export const getStaticProps = async (): Promise<
   GetStaticPropsResult<HomeProps>
 > => {
-  const prefectures = await getAllPrefectures().handler();
+  const prefectures = await new getAllPrefectures().handler();
 
   return {
     props: {
