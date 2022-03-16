@@ -11,7 +11,8 @@
     "lint:prettier": "prettier --ignore-path .prettierignore  --check '**/*.{js,ts,tsx,css}'",
     "format": "run-s format:eslint format:prettier",
     "format:eslint": "eslint --fix --ext ts,tsx,js .",
-    "format:prettier": "prettier --ignore-path .prettierignore  --write '**/*.{js,ts,tsx,css}'"
+    "format:prettier": "prettier --ignore-path .prettierignore  --write '**/*.{js,ts,tsx,css}'",
+    "test": "jest"
   },
   "dependencies": {
     "@vanilla-extract/babel-plugin": "^1.1.4",
@@ -22,6 +23,7 @@
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "recharts": "^2.1.9",
+    "sanitize.css": "^13.0.0",
     "swr": "^1.2.2"
   },
   "devDependencies": {
