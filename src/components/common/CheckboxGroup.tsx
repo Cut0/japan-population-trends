@@ -1,4 +1,5 @@
 import { VFC, useRef } from "react";
+import { tagContainer, checkbox, label } from "./CheckboxGroup.css";
 
 type CheckboxGroupProps = {
   labelTitles: string[];
@@ -14,16 +15,20 @@ export const CheckboxGroup: VFC<CheckboxGroupProps> = ({
     <>
       {labelTitles.map((title, index) => {
         return (
-          <label key={index}>
+          <div className={tagContainer} key={index}>
             <input
+              className={checkbox}
+              id={`${index}`}
               type="checkbox"
               onChange={(e) => {
                 checkList.current[index] = e.target.checked;
                 onChange(checkList.current);
               }}
             />
-            {title}
-          </label>
+            <label className={label} htmlFor={`${index}`}>
+              {title}
+            </label>
+          </div>
         );
       })}
     </>
