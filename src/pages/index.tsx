@@ -9,7 +9,7 @@ import {
   Line,
   Legend,
 } from "recharts";
-import { getAllPrefectures, Prefecture } from "../api-client";
+import { getAllPrefectures, Prefecture } from "../../api-client";
 import { CheckboxGroup } from "../components/common/CheckboxGroup";
 import { usePopulationTrends } from "../hooks/populationTrendsHooks";
 import { numberToColorCode } from "../utils/color";

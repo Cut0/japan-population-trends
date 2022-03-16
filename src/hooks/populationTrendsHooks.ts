@@ -4,7 +4,7 @@ import {
   getPopulationTrends,
   Prefecture,
   TotalPopulation,
-} from "../api-client";
+} from "../../api-client";
 
 export const usePopulationTrends = () => {
   const { key, handler } = getPopulationTrends();
