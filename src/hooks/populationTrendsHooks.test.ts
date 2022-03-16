@@ -126,6 +126,10 @@ test("データ取得成功", async () => {
     },
   ];
 
+  jest
+    .spyOn(getPopulationTrends.prototype, "handler")
+    .mockResolvedValue(totalPopulationData);
+
   const { result } = renderHook(() => usePopulationTrends(), {
     wrapper: SwrTestWrapper,
   });

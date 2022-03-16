@@ -26,6 +26,12 @@ jobs:
         if: steps.yarn-cache.outputs.cache-hit != 'true'
         run: yarn install
 
-      - run: yarn test
-      - run: yarn lint
-      - run: yarn build
+      - name: test check
+        run: yarn test
+      - name: lint check
+        run: yarn lint
+      - name: build check
+        env:
+          NEXT_PUBLIC_API_KEY: ${{ secrets.NEXT_PUBLIC_API_KEY }}
+          NEXT_PUBLIC_END_POINT: ${{ secrets.NEXT_PUBLIC_END_POINT }}
+        run: yarn build
