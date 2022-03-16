@@ -1,4 +1,5 @@
 import { initializeAxios } from "../plugins/axios";
+import { mockTotatlPopulation } from "../../mock-api-client";
 import { Prefecture, TotalPopulation, TotalPopulationResponse } from "./types";
 import { PopulationResponse, TotalPopulationDataElement } from ".";
 
@@ -19,10 +20,9 @@ export class getPopulationTrends {
             })
             .then((response) => {
               if (process.env.NODE_ENV === "development") {
-                /**
-                 * MSWに渡すためresponse.dataに設定
-                 */
-                return response.data as unknown as TotalPopulationDataElement[];
+                // mswが要求するnodeのバージョンがvercelに存在しないため、一時的にmswを利用しない方針にする。
+                // return response.data as unknown as TotalPopulationDataElement[];
+                return mockTotatlPopulation[code - 1];
               }
               const totalPopulation = response.data.result.data.find(
                 (el) => el.label === "総人口",
