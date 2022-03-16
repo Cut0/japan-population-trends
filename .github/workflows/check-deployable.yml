@@ -1,4 +1,4 @@
-name: Jest CI
+name: Deployable Check
 
 on:
   pull_request:
