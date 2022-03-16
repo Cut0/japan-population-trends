@@ -5,18 +5,18 @@ import {
   Prefecture,
   TotalPopulation,
 } from "../../api-client";
+import { handleApiError } from "../utils/error";
 
 export const usePopulationTrends = () => {
-  const { key, handler } = getPopulationTrends();
+  const { key, handler } = new getPopulationTrends();
   const { data, error, mutate } = useSWR<TotalPopulation[], Error>(key);
 
   const fetchPopulationTrends = useCallback(
-    (prefectureList: Prefecture[]) => {
+    (prefectureList: Prefecture[]) =>
       mutate(async () => {
         const populationTrends = await handler(prefectureList);
         return populationTrends;
-      });
-    },
+      }).catch(handleApiError),
     [mutate, handler],
   );
 
