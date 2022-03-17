@@ -1,34 +1,43 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## 概要
 
-## Getting Started
+日本の都道府県ごとの人口推移をグラフで見る Web アプリです
+(https://japan-population-trends.vercel.app/)
 
-First, run the development server:
+## 環境
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+開発環境は Node(16.13.0) と yarn を採用しました。
+本番環境は Vercel が Node の 14 系までのサポートだったので、14 系を採用しています。
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 使用技術
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+- Next.js : SSG や　 Vercel 　の親和性を考えて採用しました。都道府県のデータは比較的不変なものであるため build 時に API から結果を取得し、`getStaticProps`で渡しています。
+- vanilla-extract : 比較的型安全にスタイリングができる点とビルド時に静的な CSS ファイルが生成されパフォーマンスに期待ができるため採用しました。
+- swr : できる限りサーバ − のキャッシュを見せる方針にし、ステート管理を薄くしたかったため採用しました。ただ、今回の規模では useState を利用したローカルステートで管理しても問題なかったかもしれません。
+- axios : API との通信に採用しました。fetch API を利用してもよかったのですが、400 番代や 500 番代のエラーが発生した際に Promise を reject しない点や response の受け取り方を比較した際に axios のほうが簡潔なため採用しました。
+- recharts : メンテナンスが続いている点とドキュメントが充実している点から採用しました。
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+## 断念した技術
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+- MSW : 初期の頃、HTTP 通信をモックするのに採用していました。上記の通り Vercel が　 Node の 14 系までのサポートであり、MSW は 16 系を必要としていたため利用をやめました。
 
-## Learn More
+## 構成
 
-To learn more about Next.js, take a look at the following resources:
+- api-client : API との通信を行いレスポンスを整形するフォルダです。
+- mock-api-client : api-client のモックです。MSW を利用しなくなったため、非常に薄くなっています。
+- src : ページやコンポーネント、Hooks など今回のプロジェクトに直接関係するものを配置してます。
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 利用方法
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+詳しくは package.json を参照してください。
 
-## Deploy on Vercel
+- `yarn dev` : Next.js を開発モードで起動します。
+- `yarn build` : 本番用にビルドします。
+- `yarn lint` : eslint と prettier の lint を走らせます。
+- `yarn format` : eslint と prettier の format を走らせます。
+- `yarn test` : Jest によるテストを実行します。開発では各ビジネスロジックに関するテストを書いています。
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 開発フロー
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- 機能が完成したら main ブランチにマージするようなトランクベース開発を採用しています。
+- main ブランチ向きの PR が作成された際に、GitHub Actions が走り、Vercel からプレビュー用のサイトリンクが発行されます。
+- main ブランチに PR がマージされた際に、 Vercel により自動的にデプロイが走ります。
