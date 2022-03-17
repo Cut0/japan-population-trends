@@ -40,7 +40,12 @@ export const HomeContent: VFC<HomeContentProps> = ({ prefectures }) => {
       <div className={chartContainer}>
         <ResponsiveContainer height={400} width="100%">
           <LineChart margin={{ top: 0, right: 0, left: 12, bottom: 30 }}>
-            <Legend align="right" layout="horizontal" verticalAlign="bottom" />
+            <Legend
+              align="right"
+              height={32}
+              layout="horizontal"
+              verticalAlign="bottom"
+            />
             <XAxis
               dataKey="year"
               domain={[1960, 2020]}
