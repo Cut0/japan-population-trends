@@ -35,7 +35,7 @@ export const HomeContent: VFC<HomeContentProps> = ({ prefectures }) => {
           <ErrorToast
             closeHandler={() => setShowErrorToast(false)}
             message="データ取得時にエラーが発生しました。"
-          ></ErrorToast>
+          />
         </div>
       )}
       <div className={checkBoxGroupContainer}>
