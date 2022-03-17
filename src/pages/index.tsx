@@ -1,4 +1,5 @@
 import type { NextPage, GetStaticPropsResult } from "next";
+import Head from "next/head";
 import { getAllPrefectures, Prefecture } from "../../api-client";
 import { PageLayout } from "../components/layout/PageLayout";
 import { HomeContent } from "../components/content/Index";
@@ -21,9 +22,19 @@ export const getStaticProps = async (): Promise<
 
 const Home: NextPage<HomeProps> = ({ prefectures }) => {
   return (
-    <PageLayout>
-      <HomeContent prefectures={prefectures}></HomeContent>
-    </PageLayout>
+    <>
+      <Head>
+        <title>日本の人口推移</title>
+        <meta
+          content="日本の各都道府県の人口推移をグラフで表現したアプリケーションです"
+          name="description"
+        />
+        <link href="/favicon.ico" rel="icon"></link>
+      </Head>
+      <PageLayout>
+        <HomeContent prefectures={prefectures}></HomeContent>
+      </PageLayout>
+    </>
   );
 };
 
