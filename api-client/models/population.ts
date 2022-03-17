@@ -1,11 +1,11 @@
 import { initializeAxios } from "../plugins/axios";
 import { mockTotatlPopulation } from "../../mock-api-client";
 import { Prefecture, TotalPopulation, TotalPopulationResponse } from "./types";
-import { PopulationResponse, TotalPopulationDataElement } from ".";
+import { PopulationResponse } from ".";
 
 const GET_POPULATION_TRENDS_URL = "/population/composition/perYear";
 
-export class getPopulationTrends {
+export class GetPopulationTrends {
   key = GET_POPULATION_TRENDS_URL;
   async handler(prefectureList: Prefecture[]): Promise<TotalPopulation[]> {
     const requests = prefectureList
