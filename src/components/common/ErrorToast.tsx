@@ -20,6 +20,7 @@ export const ErrorToast: VFC<ErrorToastProps> = ({ message, closeHandler }) => {
       clearTimeout(timer);
     };
   }, [closeHandler]);
+
   return (
     <div className={errorToastContent}>
       <Close className={closeIconContainer} onClick={closeHandler} />
