@@ -25,7 +25,7 @@ type HomeContentProps = {
 };
 
 export const HomeContent: VFC<HomeContentProps> = ({ prefectures }) => {
-  const { data, fetchPopulationTrends } = usePopulationTrends();
+  const { totalPopulationList, fetchPopulationTrends } = usePopulationTrends();
   const [showErrorToast, setShowErrorToast] = useState(false);
 
   return (
@@ -73,26 +73,27 @@ export const HomeContent: VFC<HomeContentProps> = ({ prefectures }) => {
             <YAxis tickFormatter={(val) => `${val}万人`} />
             <CartesianGrid strokeDasharray="3 3" />
             <Tooltip />
-            {data &&
-              data
-                .map((list) => {
+            {totalPopulationList &&
+              totalPopulationList
+                .map((totalPopulationByPrefecture) => {
                   return {
-                    ...list,
-                    data: list.data.map((el) => {
+                    ...totalPopulationByPrefecture,
+                    data: totalPopulationByPrefecture.data.map((el) => {
                       return { ...el, value: el.value / 10000 };
                     }),
                   };
                 })
-                .map((list, index) => {
+                .map((totalPopulationByPrefecture, index) => {
                   return (
                     <Line
                       activeDot={{ r: 8 }}
-                      data={list.data}
+                      data={totalPopulationByPrefecture.data}
                       dataKey="value"
                       key={index}
-                      name={list.prefecture.prefName}
+                      name={totalPopulationByPrefecture.prefecture.prefName}
                       stroke={numberToColorCode(
-                        list.prefecture.prefCode / prefectures.length,
+                        totalPopulationByPrefecture.prefecture.prefCode /
+                          prefectures.length,
                       )}
                       type="monotone"
                     />

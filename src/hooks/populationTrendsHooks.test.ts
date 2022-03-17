@@ -9,7 +9,7 @@ test("初期状態", async () => {
   });
 
   expect(result.current).toEqual({
-    data: undefined,
+    totalPopulationList: undefined,
     error: undefined,
     loading: true,
     fetchPopulationTrends: expect.any(Function),
@@ -142,7 +142,7 @@ test("データ取得成功", async () => {
   });
 
   expect(result.current).toEqual({
-    data: totalPopulationData,
+    totalPopulationList: totalPopulationData,
     error: undefined,
     loading: false,
     fetchPopulationTrends: expect.any(Function),
@@ -166,7 +166,7 @@ test("失敗時", async () => {
   });
 
   expect(result.current).toEqual({
-    data: undefined,
+    totalPopulationList: undefined,
     error: new Error(),
     loading: false,
     fetchPopulationTrends: expect.any(Function),

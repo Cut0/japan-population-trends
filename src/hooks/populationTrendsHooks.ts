@@ -21,7 +21,7 @@ export const usePopulationTrends = () => {
   );
 
   return {
-    data,
+    totalPopulationList: data,
     error,
     loading: !data && !error,
     fetchPopulationTrends,
