@@ -36,6 +36,14 @@
 - `yarn format` : eslint と prettier の format を走らせます。
 - `yarn test` : Jest によるテストを実行します。開発では各ビジネスロジックに関するテストを書いています。
 
+適宜、`.env`ファイルの追加をお願いします。構成は以下のとおりです。
+
+```
+NEXT_PUBLIC_API_KEY=[resasのAPIKEY]
+NEXT_PUBLIC_END_POINT=https://opendata.resas-portal.go.jp/api/v1
+
+```
+
 ## 開発フロー
 
 - 機能が完成したら main ブランチにマージするようなトランクベース開発を採用しています。
