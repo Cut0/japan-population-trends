@@ -1,4 +1,4 @@
-import type { VFC } from "react";
+import { useState, VFC } from "react";
 import {
   ResponsiveContainer,
   CartesianGrid,
@@ -13,7 +13,12 @@ import { Prefecture } from "../../../api-client";
 import { CheckboxGroup } from "../common/CheckboxGroup";
 import { usePopulationTrends } from "../../hooks/populationTrendsHooks";
 import { numberToColorCode } from "../../utils/color";
-import { checkBoxGroupContainer, chartContainer } from "./index.css";
+import { ErrorToast } from "../common/ErrorToast";
+import {
+  errorToastContainer,
+  checkBoxGroupContainer,
+  chartContainer,
+} from "./index.css";
 
 type HomeContentProps = {
   prefectures: Prefecture[];
@@ -21,9 +26,18 @@ type HomeContentProps = {
 
 export const HomeContent: VFC<HomeContentProps> = ({ prefectures }) => {
   const { data, fetchPopulationTrends } = usePopulationTrends();
+  const [showErrorToast, setShowErrorToast] = useState(false);
 
   return (
     <>
+      {showErrorToast && (
+        <div className={errorToastContainer}>
+          <ErrorToast
+            closeHandler={() => setShowErrorToast(false)}
+            message="データ取得時にエラーが発生しました。"
+          ></ErrorToast>
+        </div>
+      )}
       <div className={checkBoxGroupContainer}>
         <CheckboxGroup
           labelTitles={prefectures.map((prefecture) => prefecture.prefName)}
@@ -33,7 +47,11 @@ export const HomeContent: VFC<HomeContentProps> = ({ prefectures }) => {
                 if (checked) return prefectures[index];
               })
               .filter((el): el is NonNullable<typeof el> => Boolean(el));
-            fetchPopulationTrends(checkedPrefectures);
+            fetchPopulationTrends(checkedPrefectures).then((res) => {
+              if (res instanceof Error) {
+                setShowErrorToast(true);
+              }
+            });
           }}
         />
       </div>
