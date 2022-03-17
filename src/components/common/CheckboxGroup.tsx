@@ -10,6 +10,9 @@ export const CheckboxGroup: VFC<CheckboxGroupProps> = ({
   labelTitles,
   onChange,
 }) => {
+  /**
+   * 再レンダリング抑制のため、useRefで管理する。
+   */
   const checkList = useRef<boolean[]>(labelTitles.map(() => false));
   return (
     <>
