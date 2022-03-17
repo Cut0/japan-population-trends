@@ -4,7 +4,7 @@ import { Prefecture, PrefecturesResponse } from ".";
 
 const GET_All_PREFECTURES_URL = "/prefectures";
 
-export class getAllPrefectures {
+export class GetAllPrefectures {
   key = GET_All_PREFECTURES_URL;
   async handler(): Promise<Prefecture[]> {
     const prefectureList = await initializeAxios()

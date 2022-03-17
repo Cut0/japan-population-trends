@@ -1,6 +1,6 @@
 import type { NextPage, GetStaticPropsResult } from "next";
 import Head from "next/head";
-import { getAllPrefectures, Prefecture } from "../../api-client";
+import { GetAllPrefectures, Prefecture } from "../../api-client";
 import { PageLayout } from "../components/layout/PageLayout";
 import { HomeContent } from "../components/content/Index";
 
@@ -11,7 +11,7 @@ type HomeProps = {
 export const getStaticProps = async (): Promise<
   GetStaticPropsResult<HomeProps>
 > => {
-  const prefectures = await new getAllPrefectures().handler();
+  const prefectures = await new GetAllPrefectures().handler();
 
   return {
     props: {

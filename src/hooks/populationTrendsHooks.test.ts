@@ -1,5 +1,5 @@
 import { act, renderHook } from "@testing-library/react-hooks";
-import { getPopulationTrends, TotalPopulation } from "../../api-client";
+import { GetPopulationTrends, TotalPopulation } from "../../api-client";
 import { SwrTestWrapper } from "../components/SwrTestWrapper";
 import { usePopulationTrends } from "./populationTrendsHooks";
 
@@ -127,7 +127,7 @@ test("データ取得成功", async () => {
   ];
 
   jest
-    .spyOn(getPopulationTrends.prototype, "handler")
+    .spyOn(GetPopulationTrends.prototype, "handler")
     .mockResolvedValue(totalPopulationData);
 
   const { result } = renderHook(() => usePopulationTrends(), {
@@ -151,7 +151,7 @@ test("データ取得成功", async () => {
 
 test("失敗時", async () => {
   jest
-    .spyOn(getPopulationTrends.prototype, "handler")
+    .spyOn(GetPopulationTrends.prototype, "handler")
     .mockRejectedValue(new Error());
 
   const { result } = renderHook(() => usePopulationTrends(), {
