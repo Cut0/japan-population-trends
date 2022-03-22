@@ -11,6 +11,9 @@ export class GetPopulationTrends {
     const requests = prefectureList
       .map((prefecture) => prefecture.prefCode)
       .map((code) => {
+        if (process.env.NODE_ENV === "development") {
+          return () => Promise.resolve(mockTotatlPopulation[code - 1]);
+        }
         return async () => {
           const totalPopulation = await initializeAxios()
             .get<PopulationResponse>(GET_POPULATION_TRENDS_URL, {
@@ -19,11 +22,6 @@ export class GetPopulationTrends {
               },
             })
             .then((response) => {
-              if (process.env.NODE_ENV === "development") {
-                // mswが要求するnodeのバージョンがvercelに存在しないため、一時的にmswを利用しない方針にする。
-                // return response.data as unknown as TotalPopulationDataElement[];
-                return mockTotatlPopulation[code - 1];
-              }
               const totalPopulation = response.data.result.data.find(
                 (el) => el.label === "総人口",
               ) as TotalPopulationResponse;
